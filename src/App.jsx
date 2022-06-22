@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.scss';
 import { Noun } from './components/Noun';
@@ -10,9 +10,10 @@ import { Translation } from './components/Translation';
 import { Job } from './components/Job';
 import { LandscapePhoto } from './components/LandscapePhoto';
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 const separator = '|';
-const baseUrl = 'http://localhost:3007';
-const url = `${baseUrl}/all`;
+const url = `${backendUrl}/all`;
 
 function App() {
 	const [searchItems, setSearchItems] = useState([]);
@@ -145,7 +146,7 @@ function App() {
 					<div className="searchItems">
 						{filteredSearchItems.map((item, i) => {
 							return (
-								<>
+								<React.Fragment key={i}>
 									{item.kind === 'noun' && (
 										<Noun item={item.item} />
 									)}
@@ -170,7 +171,7 @@ function App() {
 									{item.kind === 'landscapePhoto' && (
 										<LandscapePhoto item={item.item} baseUrl={baseUrl} />
 									)}
-								</>
+								</React.Fragment>
 							);
 						})}
 					</div>
